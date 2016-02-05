@@ -1,23 +1,29 @@
 ---
 # from instructions and q&a at http://kenfallon.com/installing-citrix-on-fedora-21/
 - name: get citrix archive
-  environment: proxy_env
-  get_url: url='{{ citrix_url }}' dest='/tmp/{{ citrix_archive }}'
+  get_url: >
+    url={{citrix_url}}
+    dest='/tmp/{{ citrix_archive }}'
+    owner=root
+    group=root
+    mode=644
 
-- name: create landing space for the tar bomb
+- name: create landing space for the citrix tar bomb
   file: >
-    owner="root"
-    group="root"
-    mode="go-w"
     path='/opt/Citrix'
     state=directory  
+    owner="root"
+    group="root"
+    mode=755
 
 - name: unarchive citrix
-  unarchive: copy=no src='/tmp/{{ citrix_archive }}' dest='/opt/Citrix'
+  unarchive: >
+    copy=no
+    src='/tmp/{{ citrix_archive }}'
+    dest='/opt/Citrix'
 
 - name: install dependencies
-  yum: name='{{ item }}' state=present
-  environment: proxy_env
+  package: name='{{item}}' state=present
   with_items:
     - gtk2.i686
     - libXext.i686
@@ -29,6 +35,8 @@
   copy: >
     src='opt/Citrix/ICAClient/keystore/cacerts/{{ item }}'
     dest='/opt/Citrix/ICAClient/keystore/cacerts/{{ item }}'
+    owner=root
+    group=root
     mode=444
   with_items:
     - 'VeriSignClass3PublicPrimaryCertificationAuthority-G5.pem'

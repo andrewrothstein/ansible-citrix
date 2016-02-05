@@ -1,0 +1,4 @@
+---
+citrix_version : '13.1.0.285639'
+citrix_platform : 'linuxx64'
+citrix_mirror : 'https://downloads.citrix.com'

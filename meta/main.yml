@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Andrew Rothstein
+  description: citrix receiver role
+  company: BlackRock
+  license:
+    - MIT
+  min_ansible_version: 2.0
+  platforms:
+    - name: Fedora
+      versions:
+        - 21
+
+  categories:
+    - development
+
+dependencies: []
+  
